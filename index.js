@@ -70,32 +70,32 @@ function setcreditdebit(counter, transObj) {
         client.incr('ExpenseCounter')
         client.get('ExpenseCounter', function(err, reply) {
             var ExpenseCounter = parseInt(reply)
-            setTransaction('Expense', ExpenseCounter, 'cr', counter)
+            setTransaction('Expense', ExpenseCounter, 'cr', counter, transObj)
         })
         var AccountMode = transObj.mode.slice(0, 1).toUpperCase() + transObj.mode.slice(1)
         client.incr(AccountMode + "Counter")
         client.get(AccountMode + "Counter", function(err, reply) {
             var AccountCounter = parseInt(reply)
-            setTransaction(AccountMode, AccountCounter, 'db', counter)
+            setTransaction(AccountMode, AccountCounter, 'db', counter, transObj)
         })
     }
     if (transObj.type === 'income') {
         client.incr('IncomeCounter')
         client.get('IncomeCounter', function(err, reply) {
             var IncomeCounter = parseInt(reply)
-            setTransaction('Income', IncomeCounter, 'db', counter)
+            setTransaction('Income', IncomeCounter, 'db', counter, transObj)
         })
         var AccountMode = transObj.mode.slice(0, 1).toUpperCase() + transObj.mode.slice(1)
         client.incr(AccountMode + "Counter")
         client.get(AccountMode + "Counter", function(err, reply) {
             var AccountCounter = parseInt(reply)
-            setTransaction(AccountMode, AccountCounter, 'cr', counter)
+            setTransaction(AccountMode, AccountCounter, 'cr', counter, transObj)
         })
     }
 
 }
 
-function setTransaction(Account, counter, TransType, TransCounter) {
+function setTransaction(Account, counter, TransType, TransCounter, transObj) {
     client.hset(Account + ':' + counter, 'date', transObj.date, function(err, reply) {
         console.log('set ' + reply);
     });
@@ -114,7 +114,7 @@ function setTransaction(Account, counter, TransType, TransCounter) {
     client.hset(Account + ':' + counter, 'mode', transObj.mode, function(err, reply) {
         console.log('set ' + reply);
     });
-    client.hset(Account + ':' + counter, 'Cr/Db', TransTypw, function(err, reply) {
+    client.hset(Account + ':' + counter, 'Cr/Db', TransType, function(err, reply) {
         console.log('set ' + reply);
     });
     client.hset(Account + ':' + counter, 'file', transObj.file, function(err, reply) {
