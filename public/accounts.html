@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Accounts</title>
+    <link rel="stylesheet" type="text/css" href="css/accounts.css">
+    <script type="text/javascript" src="js/accounts.js"></script>
+</head>
+
+<body>
+    <div class="header"></div>
+    <div class="navBar">
+        <ul class="navList">
+            <li><a href="#" name="Overview" onclick="showOverview()">OVERVIEW</a></li>
+            <li><a href="#" name="Transactions" onclick="showTransactions()">TRANSACTIONS</a></li>
+            <li><a href="#" name="AddTransactions" onclick="showAddTrans()">ADD TRANSACTIONS</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="overviewDiv">
+            <img src="img/cash.jpg">
+            <label for="cashAccount">Cash <span id="cashAccount"><script>getCashBal()</script></span></label>
+            <br>
+            <img src="img/card.jpg">
+            <label for="cashAccount">Card <span id="cardAccount"><script>getCardBal()</script></span></label>
+        </div>
+        <div class="transactionsDiv" style="display: none">
+            transactions
+        </div>
+        <div class="addTransDiv" style="display: none">
+            <form id="form" action="/accounts" enctype="multipart/form-data" method="post">
+                <label for="date">Date of transaction</label>
+                <input id="date" type="date" name="transDate" placeholder="Date">
+                <br>
+                <label for="description">Transaction description</label>
+                <input id="description" type="text" maxlength="100" name="description" placeholder="Transaction description">
+                <br>
+                <label for="amount">Transaction amount</label>
+                <input id="amount" type="text" name="amount" placeholder="Amount">
+                <br>
+                <label for="image">Upload document</label>
+                <input id="upload" type="file" name="image">
+                <br>
+                <label for="transType">Transaction Type</label>
+                <select id="transTypeDD" name="transTypeDD">
+                    <option value="select">Select transaction type</option>
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
+                <br>
+                <label for="transMode">Mode of transaction</label>
+                <select id="transModeDD" name="transModeDD">
+                    <option value="select">Select mode</option>
+                    <option value="cash">Cash</option>
+                    <option value="bank">Bank</option>
+                </select>
+                <br>
+                <button>Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
