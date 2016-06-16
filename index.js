@@ -62,6 +62,7 @@ function set(counter, transObj) {
         console.log('set ' + reply);
     });
     setTotal(transObj.type, transObj.mode, transObj.amount)
+    setcreditdebit(counter, transObj)
 }
 
 function setcreditdebit(counter, transObj) {
@@ -69,15 +70,29 @@ function setcreditdebit(counter, transObj) {
         client.incr('ExpenseCounter')
         client.get('ExpenseCounter', function(err, reply) {
             var ExpenseCounter = parseInt(reply)
-            setTransaction('Expense', ExpenseCounter, 'db', counter)
+            setTransaction('Expense', ExpenseCounter, 'cr', counter)
         })
-        var accountType = transObj.type
-        client.incr('ExpenseCounter')
-        client.get('ExpenseCounter', function(err, reply) {
-            var ExpenseCounter = parseInt(reply)
-            setTransaction('Expense', ExpenseCounter, 'db', counter)
+        var AccountMode = transObj.mode.slice(0, 1).toUpperCase() + transObj.mode.slice(1)
+        client.incr(AccountMode + "Counter")
+        client.get(AccountMode + "Counter", function(err, reply) {
+            var AccountCounter = parseInt(reply)
+            setTransaction(AccountMode, AccountCounter, 'db', counter)
         })
     }
+    if (transObj.type === 'income') {
+        client.incr('IncomeCounter')
+        client.get('IncomeCounter', function(err, reply) {
+            var IncomeCounter = parseInt(reply)
+            setTransaction('Income', IncomeCounter, 'db', counter)
+        })
+        var AccountMode = transObj.mode.slice(0, 1).toUpperCase() + transObj.mode.slice(1)
+        client.incr(AccountMode + "Counter")
+        client.get(AccountMode + "Counter", function(err, reply) {
+            var AccountCounter = parseInt(reply)
+            setTransaction(AccountMode, AccountCounter, 'cr', counter)
+        })
+    }
+
 }
 
 function setTransaction(Account, counter, TransType, TransCounter) {
