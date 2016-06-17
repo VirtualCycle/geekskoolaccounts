@@ -153,6 +153,20 @@ router.get("/cardbal", function(req, res) {
     })
 })
 
+router.get("/getTransactionsCount", function(req, res) {
+    client.get('counter', function(err, reply) {
+        res.send(reply)     
+    }) 
+})
+
+router.get("/getTransactions/:id", function(req, res) {
+    var id = parseInt(req.params.id, 10)
+    console.log(id)
+    client.hgetall('Transactions:' + id, function(err, reply) {
+        res.send(reply)
+    })
+})
+
 // Launch App
 router.set('port', (process.env.PORT || 5000))
 router.listen(router.get('port'), function() {

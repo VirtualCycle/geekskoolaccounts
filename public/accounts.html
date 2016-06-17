@@ -24,8 +24,21 @@
             <img src="img/card.jpg">
             <label for="cashAccount">Card <span id="cardAccount"><script>getCardBal()</script></span></label>
         </div>
-        <div class="transactionsDiv" style="display: none">
-            transactions
+        <div class="transactionsDiv" id="transactionsDiv" style="display: none">
+            <div class="transHeader">
+                <label for="dateDiv" class="dateDiv">Date</label>
+                <label for="transDescDiv" class="transDescDiv">Description</label>
+                <label for="transAmountDiv" class="transAmountDiv">Amount</label>
+                <label for="transTypeDiv" class="transTypeDiv">Type</label>
+                <label for="transModeDiv" class="transModeDiv">Mode</label>
+            </div>
+            <template class="transTemplate">
+                <div class="dateDiv"></div>
+                <div class="transDescDiv"></div>
+                <div class="transAmountDiv"></div>
+                <div class="transTypeDiv"></div>
+                <div class="transModeDiv"></div><br>
+            </template>
         </div>
         <div class="addTransDiv" style="display: none">
             <form id="form" action="/accounts" enctype="multipart/form-data" method="post">
