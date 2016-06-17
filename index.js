@@ -142,13 +142,13 @@ function setTotal(type, mode, amount) {
 
 
 router.get("/cashbal", function(req, res) {
-    client.get('CashBalance', function(err, reply) {
+    client.get('CashTotal', function(err, reply) {
         res.send(reply)
     })
 })
 
 router.get("/cardbal", function(req, res) {
-    client.get('BankBalance', function(err, reply) {
+    client.get('BankTotal', function(err, reply) {
         res.send(reply)
     })
 })
